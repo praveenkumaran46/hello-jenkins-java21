@@ -6,7 +6,7 @@ pipeline {
       args  '-v $HOME/.m2:/root/.m2' // cache Maven repo to speed up builds
     }
   }
-  options { timestamps(); ansiColor('xterm') }
+  options { timestamps(); }
   stages {
     stage('Checkout') {
       steps { checkout scm }
