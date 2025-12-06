@@ -3,10 +3,11 @@ pipeline {
   agent {
     docker {
       image 'maven:3.9-eclipse-temurin-21'
-      args  '-v $HOME/.m2:/root/.m2' // cache Maven repo to speed up builds
+      // Run as root; set HOME so Maven uses /root/.m2; mount Jenkins cache there
+      args  '-u 0:0 -e HOME=/root -v /var/lib/jenkins/.m2:/root/.m2'
     }
   }
-  options { timestamps(); }
+  options { timestamps() }
   stages {
     stage('Checkout') {
       steps { checkout scm }
@@ -23,3 +24,4 @@ pipeline {
     }
   }
 }
+
